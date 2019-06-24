@@ -10,6 +10,8 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.server.command.ForgeCommand;
 
+import java.util.Arrays;
+
 
 public class PinfoCommand extends ForgeCommand {
 
@@ -37,6 +39,13 @@ public class PinfoCommand extends ForgeCommand {
         String pokemonName = args[1];
         PokemonCrawler crawler = new PokemonCrawler(pokemonName);
 
+        String validQueries[] = {"d", "t", "s", "description", "type", "stats"};
+        if (!Arrays.asList(validQueries).contains(query)) {
+            String msg = String.format("Couldn't process %s. Try again.", query);
+            showErrorMessage(msg, sender);
+            return;
+        }
+
         if (!crawler.pokemonValid()) {
             String msg = String.format("Couldn't find pokemon named %s. Try again.", pokemonName);
             showErrorMessage(msg, sender);
@@ -44,14 +53,14 @@ public class PinfoCommand extends ForgeCommand {
         }
 
         switch (query) {
-            case "description":
-            case "desc":
-            case "d": {
-                String description = crawler.getDescription();
-                sender.sendMessage(new TextComponentString(description));
+            case "d":
+            case "description": {
+                TextComponentString description = crawler.getDescription();
+                sender.sendMessage(description);
                 break;
             }
 
+            case "t":
             case "type": {
                 ITextComponent typeInfo = crawler.getTypeInfo();
                 sender.sendMessage(typeInfo);
@@ -59,16 +68,9 @@ public class PinfoCommand extends ForgeCommand {
             }
 
             case "s":
-            case "stats":
-            case "tot":
-            case "total": {
+            case "stats": {
                 ITextComponent stats = crawler.getStats();
                 sender.sendMessage(stats);
-                break;
-            }
-
-            default: {
-                showErrorMessage("There is no such command as" + query + ". Try again.", sender);
                 break;
             }
         }

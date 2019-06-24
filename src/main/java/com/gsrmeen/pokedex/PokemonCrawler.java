@@ -29,9 +29,9 @@ public class PokemonCrawler {
         }
     }
 
-    public String getDescription() {
+    public TextComponentString getDescription() {
         Element content = document.selectFirst("div.mw-parser-output").selectFirst("p");
-        return content.text();
+        return new TextComponentString(content.text());
     }
 
     public boolean pokemonValid() {

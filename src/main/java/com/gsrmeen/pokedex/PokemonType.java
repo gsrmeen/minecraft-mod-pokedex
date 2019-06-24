@@ -19,7 +19,7 @@ public enum PokemonType {
     POISON(13, "Poison", TextFormatting.DARK_PURPLE),
     PSYCHIC(14, "Psychic", TextFormatting.DARK_PURPLE),
     ROCK(15, "Rock", TextFormatting.GOLD),
-    STEEL(16, "Steel", TextFormatting.BLUE),
+    STEEL(16, "Steel", TextFormatting.DARK_GRAY),
     WATER(17, "Water", TextFormatting.BLUE);
 
     PokemonType(int id, String name, TextFormatting color) {
