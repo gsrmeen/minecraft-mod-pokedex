@@ -4,7 +4,7 @@ import net.minecraft.util.text.TextFormatting;
 
 public enum PokemonType {
     BUG(0, "Bug", TextFormatting.DARK_GREEN),
-    DARK(1, "Dark", TextFormatting.BLACK),
+    DARK(1, "Dark", TextFormatting.DARK_GRAY),
     DRAGON(2, "Dragon", TextFormatting.LIGHT_PURPLE),
     ELECTRIC(3, "Electric", TextFormatting.YELLOW),
     FAIRY(4, "Fairy", TextFormatting.RED),

@@ -58,8 +58,13 @@ public class PinfoCommand extends ForgeCommand {
                 break;
             }
 
+            case "s":
+            case "stats":
+            case "tot":
             case "total": {
-
+                ITextComponent stats = crawler.getStats();
+                sender.sendMessage(stats);
+                break;
             }
         }
 
