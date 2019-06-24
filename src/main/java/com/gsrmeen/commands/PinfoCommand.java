@@ -1,4 +1,4 @@
-package com.example.commands;
+package com.gsrmeen.commands;
 
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
