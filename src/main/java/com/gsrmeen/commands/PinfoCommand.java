@@ -1,5 +1,6 @@
 package com.gsrmeen.commands;
 
+import com.gsrmeen.pokedex.PokemonCrawler;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -20,20 +21,48 @@ public class PinfoCommand extends ForgeCommand {
 
     @Override
     public String getUsage(ICommandSender icommandsender) {
-        return super.getUsage(icommandsender);
+        return "Usage: /pinfo [pokemon]";
     }
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-        if (args.length != 1) {
-            String errorMessage = "Incorrect number of parameters, usage: /pinfo [pokemon]";
-            sender.sendMessage(new TextComponentString(errorMessage).setStyle(new Style().setColor(TextFormatting.RED)));
+        if (args.length != 2) {
+            String msg = "Incorrect number of parameters, usage: /pinfo [pokemon]";
+            showErrorMessage(msg, sender);
             return;
         }
 
-        String pokemonName = args[0];
-        String returnMessage = String.format("You are searching info for: %s", pokemonName);
-        sender.sendMessage(new TextComponentString(returnMessage));
+        String query = args[0];
+        String pokemonName = args[1];
+        PokemonCrawler crawler = new PokemonCrawler(pokemonName);
 
+        if (!crawler.pokemonValid()) {
+            String msg = String.format("Couldn't find pokemon named %s. Try again.", pokemonName);
+            showErrorMessage(msg, sender);
+            return;
+        }
+
+        switch (query) {
+            case "description":
+            case "desc":
+            case "d": {
+                String description = crawler.getDescription();
+                sender.sendMessage(new TextComponentString(description));
+                break;
+            }
+
+            case "type":
+            case "t": {
+                String description = crawler.getTypeInfo();
+                sender.sendMessage(new TextComponentString(description));
+                break;
+            }
+        }
+
+
+    }
+
+    private void showErrorMessage(String msg, ICommandSender sender) {
+        sender.sendMessage(new TextComponentString(msg).setStyle(new Style().setColor(TextFormatting.RED)));
     }
 }
