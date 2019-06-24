@@ -55,7 +55,7 @@ public class PokemonCrawler {
             sb.append("Weak against: ");
             for (int i = 0; i < types.size(); i++) {
                 if (multipliers.get(i) > 1) {
-                    sb.append(String.format("%s(%.0f) ", types.get(i), multipliers.get(i)));
+                    sb.append(String.format("%s (%.0f) ", types.get(i), multipliers.get(i)));
                 }
             }
 
@@ -64,7 +64,7 @@ public class PokemonCrawler {
             sb.append("Tough against: ");
             for (int i = 0; i < types.size(); i++) {
                 if (multipliers.get(i) < 1) {
-                    sb.append(String.format("%s(%.2f) ", types.get(i), multipliers.get(i)));
+                    sb.append(String.format("%s (%.2f) ", types.get(i), multipliers.get(i)));
                 }
             }
 

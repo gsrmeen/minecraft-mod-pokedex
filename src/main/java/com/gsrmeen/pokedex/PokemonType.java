@@ -1,28 +1,35 @@
 package com.gsrmeen.pokedex;
 
 public enum PokemonType {
-    BUG(0),
-    DARK(1),
-    DRAGON(2),
-    ELECTRIC(3),
-    FAIRY(4),
-    FIGHTING(5),
-    FIRE(6),
-    FLYING(7),
-    GHOST(8),
-    GRASS(9),
-    GROUND(10),
-    ICE(11),
-    NORMAL(12),
-    POISON(13),
-    PSYCHIC(14),
-    ROCK(15),
-    STEEL(16),
-    WATER(17);
+    BUG(0, "Bug"),
+    DARK(1, "Dark"),
+    DRAGON(2, "Dragon"),
+    ELECTRIC(3, "Electric"),
+    FAIRY(4, "Fairy"),
+    FIGHTING(5, "Fighting"),
+    FIRE(6, "Fire"),
+    FLYING(7, "Flying"),
+    GHOST(8, "Ghost"),
+    GRASS(9, "Grass"),
+    GROUND(10, "Ground"),
+    ICE(11, "Ice"),
+    NORMAL(12, "Normal"),
+    POISON(13, "Poison"),
+    PSYCHIC(14, "Psychic"),
+    ROCK(15, "Rock"),
+    STEEL(16, "Steel"),
+    WATER(17, "Water");
 
-    PokemonType(int id) {
+    PokemonType(int id, String name) {
         this.id = id;
+        this.prettyName = name;
+    }
+
+    @Override
+    public String toString() {
+        return this.prettyName;
     }
 
     private int id;
+    private String prettyName;
 }
