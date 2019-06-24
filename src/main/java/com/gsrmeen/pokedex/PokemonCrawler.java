@@ -1,5 +1,6 @@
 package com.gsrmeen.pokedex;
 
+import net.minecraft.util.text.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -8,23 +9,20 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class PokemonCrawler {
     public static final String TYPE_TABLE_STYLE = "border: 2px solid #111111; text-align:center; background:#555555; margin-right: 5px; margin-bottom: 5px;";
     private String pokemon;
-    private String url;
     private static String URL_TEMPLATE = "https://pixelmonmod.com/wiki/index.php?title=";
 
     public PokemonCrawler(String pokemon) {
         this.pokemon = pokemon;
-        this.url = URL_TEMPLATE + pokemon;
     }
 
     public String getDescription() {
         try {
-            Document document = Jsoup.connect(url).get();
+            Document document = Jsoup.connect(this.getUrl()).get();
             Element content = document.selectFirst("div.mw-parser-output").selectFirst("p");
             return content.text();
         } catch (IOException e) {
@@ -37,10 +35,10 @@ public class PokemonCrawler {
         return true;
     }
 
-    public String getTypeInfo() {
+    public ITextComponent getTypeInfo() {
         try {
-            StringBuilder sb = new StringBuilder();
-            Document document = Jsoup.connect(url).get();
+
+            Document document = Jsoup.connect(getUrl()).get();
             Element typeArray = document.selectFirst("table[style='" + TYPE_TABLE_STYLE + "']");
             Elements tds = typeArray.select("td");
 
@@ -52,27 +50,37 @@ public class PokemonCrawler {
             }
 
 
-            sb.append("Weak against: ");
+            ITextComponent msg = new TextComponentString("Weak against: ");
             for (int i = 0; i < types.size(); i++) {
                 if (multipliers.get(i) > 1) {
-                    sb.append(String.format("%s (%.0f) ", types.get(i), multipliers.get(i)));
+                    String content = String.format("%s (%.0f) ", types.get(i), multipliers.get(i));
+                    TextComponentString c = getFormattedTextComponent(content, types.get(i).getChatColor());
+                    msg.appendSibling(c);
                 }
             }
 
-            sb.append("\n");
+            msg.appendSibling(new TextComponentString("\nTough against: "));
 
-            sb.append("Tough against: ");
             for (int i = 0; i < types.size(); i++) {
                 if (multipliers.get(i) < 1) {
-                    sb.append(String.format("%s (%.2f) ", types.get(i), multipliers.get(i)));
+                    String content = String.format("%s (%.2f) ", types.get(i), multipliers.get(i));
+                    TextComponentString c = getFormattedTextComponent(content, types.get(i).getChatColor());
+                    msg.appendSibling(c);
                 }
             }
 
-            return sb.toString();
+            return msg;
         } catch (IOException e) {
             e.printStackTrace();
-            return e.getLocalizedMessage();
+            ITextComponent error = new TextComponentString(e.getLocalizedMessage());
+            return error;
         }
+    }
+
+    private TextComponentString getFormattedTextComponent(String msg, TextFormatting color) {
+        TextComponentString rc = new TextComponentString(msg);
+        rc.setStyle(new Style().setColor(color));
+        return rc;
     }
 
     private double multiplierToDouble(String text) {
@@ -91,5 +99,9 @@ public class PokemonCrawler {
         } else {
             return 0;
         }
+    }
+
+    private String getUrl() {
+        return URL_TEMPLATE + pokemon;
     }
 }

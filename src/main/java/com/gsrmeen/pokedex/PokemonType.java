@@ -1,28 +1,31 @@
 package com.gsrmeen.pokedex;
 
-public enum PokemonType {
-    BUG(0, "Bug"),
-    DARK(1, "Dark"),
-    DRAGON(2, "Dragon"),
-    ELECTRIC(3, "Electric"),
-    FAIRY(4, "Fairy"),
-    FIGHTING(5, "Fighting"),
-    FIRE(6, "Fire"),
-    FLYING(7, "Flying"),
-    GHOST(8, "Ghost"),
-    GRASS(9, "Grass"),
-    GROUND(10, "Ground"),
-    ICE(11, "Ice"),
-    NORMAL(12, "Normal"),
-    POISON(13, "Poison"),
-    PSYCHIC(14, "Psychic"),
-    ROCK(15, "Rock"),
-    STEEL(16, "Steel"),
-    WATER(17, "Water");
+import net.minecraft.util.text.TextFormatting;
 
-    PokemonType(int id, String name) {
+public enum PokemonType {
+    BUG(0, "Bug", TextFormatting.DARK_GREEN),
+    DARK(1, "Dark", TextFormatting.BLACK),
+    DRAGON(2, "Dragon", TextFormatting.LIGHT_PURPLE),
+    ELECTRIC(3, "Electric", TextFormatting.YELLOW),
+    FAIRY(4, "Fairy", TextFormatting.RED),
+    FIGHTING(5, "Fighting", TextFormatting.DARK_RED),
+    FIRE(6, "Fire", TextFormatting.RED),
+    FLYING(7, "Flying", TextFormatting.AQUA),
+    GHOST(8, "Ghost", TextFormatting.GRAY),
+    GRASS(9, "Grass", TextFormatting.GREEN),
+    GROUND(10, "Ground", TextFormatting.GOLD),
+    ICE(11, "Ice", TextFormatting.DARK_AQUA),
+    NORMAL(12, "Normal", TextFormatting.WHITE),
+    POISON(13, "Poison", TextFormatting.DARK_PURPLE),
+    PSYCHIC(14, "Psychic", TextFormatting.DARK_PURPLE),
+    ROCK(15, "Rock", TextFormatting.GOLD),
+    STEEL(16, "Steel", TextFormatting.BLUE),
+    WATER(17, "Water", TextFormatting.BLUE);
+
+    PokemonType(int id, String name, TextFormatting color) {
         this.id = id;
         this.prettyName = name;
+        this.chatColor = color;
     }
 
     @Override
@@ -30,6 +33,11 @@ public enum PokemonType {
         return this.prettyName;
     }
 
+    public TextFormatting getChatColor() {
+        return chatColor;
+    }
+
     private int id;
     private String prettyName;
+    private TextFormatting chatColor;
 }
