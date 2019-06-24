@@ -66,9 +66,12 @@ public class PinfoCommand extends ForgeCommand {
                 sender.sendMessage(stats);
                 break;
             }
+
+            default: {
+                showErrorMessage("There is no such command as" + query + ". Try again.", sender);
+                break;
+            }
         }
-
-
     }
 
     private void showErrorMessage(String msg, ICommandSender sender) {
