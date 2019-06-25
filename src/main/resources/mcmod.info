@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "pokedexmoc",
+  "name": "Pokédex Mod",
+  "description": "Mod to simplify searching some info about Pokémon. Useful for Pixelmon players.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "url": "https://github.com/gsrmeen/minecraft-mod-pokedex",
+  "updateUrl": "https://github.com/gsrmeen/minecraft-mod-pokedex",
+  "authorList": ["gsrmeen"],
+  "credits": "The Forge and FML guys, for making a great docs",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
