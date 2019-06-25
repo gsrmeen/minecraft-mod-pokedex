@@ -1,6 +1,7 @@
 package com.gsrmeen.commands;
 
-import com.gsrmeen.pokedex.PokemonCrawler;
+import com.gsrmeen.pokedex.IPokemonCrawler;
+import com.gsrmeen.pokedex.PixelmonPokemonCrawler;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -37,7 +38,7 @@ public class PinfoCommand extends ForgeCommand {
 
         String query = args[0];
         String pokemonName = args[1];
-        PokemonCrawler crawler = new PokemonCrawler(pokemonName);
+        IPokemonCrawler crawler = new PixelmonPokemonCrawler(pokemonName);
 
         String validQueries[] = {"d", "t", "s", "description", "type", "stats"};
         if (!Arrays.asList(validQueries).contains(query)) {

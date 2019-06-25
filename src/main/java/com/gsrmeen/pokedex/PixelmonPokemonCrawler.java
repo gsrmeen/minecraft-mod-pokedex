@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PokemonCrawler {
+public class PixelmonPokemonCrawler implements IPokemonCrawler {
     private String pokemon;
     private Document document;
 
@@ -20,7 +20,7 @@ public class PokemonCrawler {
     private static final String TOTAL_TABLE_STYLE = "border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; -khtml-border-radius: 5px; -icab-border-radius: 5px; -o-border-radius: 5px;;";
     private static final String ERROR_DIV = "noarticletext mw-content-ltr";
 
-    public PokemonCrawler(String pokemon) {
+    public PixelmonPokemonCrawler(String pokemon) {
         this.pokemon = pokemon;
         try {
             this.document = Jsoup.connect(getUrl()).get();
@@ -34,13 +34,7 @@ public class PokemonCrawler {
         return new TextComponentString(content.text());
     }
 
-    public boolean pokemonValid() {
-        if (document == null) return false;
-        Elements faultyElems = document.select("div[style='" + ERROR_DIV + "']");
-        return faultyElems != null && faultyElems.size() == 0;
-    }
-
-    public ITextComponent getTypeInfo() {
+    public TextComponentString getTypeInfo() {
         Element typeArray = document.selectFirst("table[style='" + TYPE_TABLE_STYLE + "']");
         Elements tds = typeArray.select("td");
 
@@ -51,7 +45,7 @@ public class PokemonCrawler {
             multipliers.add(multiplierToDouble(td.text()));
         }
 
-        ITextComponent msg = new TextComponentString("Weak against: ");
+        TextComponentString msg = new TextComponentString("Weak against: ");
         for (int i = 0; i < types.size(); i++) {
             if (multipliers.get(i) > 1) {
                 String content = String.format("%s (%.0f) ", types.get(i), multipliers.get(i));
@@ -74,7 +68,7 @@ public class PokemonCrawler {
     }
 
 
-    public ITextComponent getStats() {
+    public TextComponentString getStats() {
         Elements tables = document.select("table");
         Element typeArray = null;
         for (Element e : tables) {
@@ -87,7 +81,7 @@ public class PokemonCrawler {
 
 
         String header = String.format("%s stats: ", pokemon);
-        ITextComponent msg = new TextComponentString(header);
+        TextComponentString msg = new TextComponentString(header);
 
         List<Integer> intsFound = new ArrayList<>();
         for (Element th : ths) {
@@ -101,8 +95,14 @@ public class PokemonCrawler {
         return msg;
     }
 
-    private ITextComponent generateTypesTextComponent(List<Integer> intsFound) {
-        ITextComponent rc = new TextComponentString("");
+    public boolean pokemonValid() {
+        if (document == null) return false;
+        Elements faultyElems = document.select("div[style='" + ERROR_DIV + "']");
+        return faultyElems != null && faultyElems.size() == 0;
+    }
+
+    private TextComponentString generateTypesTextComponent(List<Integer> intsFound) {
+        TextComponentString rc = new TextComponentString("");
         for (int i = 0; i < 7; i++) {
             String stat = "";
             TextFormatting color = TextFormatting.WHITE;
@@ -163,6 +163,7 @@ public class PokemonCrawler {
     }
 
     private double multiplierToDouble(String text) {
+        System.out.println("TEXT GOT: " + text);
         if (text.contains("4")) {
             return 4;
         } else if (text.contains("2")) {
