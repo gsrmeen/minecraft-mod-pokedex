@@ -1,4 +1,4 @@
-package com.gsrmeen.pokedex;
+package com.gsrmeen.pokemonutils;
 
 import net.minecraft.util.text.TextFormatting;
 

@@ -1,5 +1,6 @@
-package com.gsrmeen.pokedex;
+package com.gsrmeen.pokemoncrawler;
 
+import com.gsrmeen.pokemonutils.PokemonType;
 import net.minecraft.util.text.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

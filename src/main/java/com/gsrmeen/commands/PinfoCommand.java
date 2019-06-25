@@ -1,7 +1,7 @@
 package com.gsrmeen.commands;
 
-import com.gsrmeen.pokedex.IPokemonCrawler;
-import com.gsrmeen.pokedex.PixelmonPokemonCrawler;
+import com.gsrmeen.pokemoncrawler.IPokemonCrawler;
+import com.gsrmeen.pokemoncrawler.PixelmonPokemonCrawler;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;

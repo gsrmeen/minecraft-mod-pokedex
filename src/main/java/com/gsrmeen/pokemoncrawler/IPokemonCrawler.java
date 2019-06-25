@@ -1,4 +1,4 @@
-package com.gsrmeen.pokedex;
+package com.gsrmeen.pokemoncrawler;
 
 import net.minecraft.util.text.TextComponentString;
 
