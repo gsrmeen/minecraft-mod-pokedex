@@ -1,6 +1,7 @@
 package com.gsrmeen.pokedexmod;
 
 import com.gsrmeen.commands.PinfoCommand;
+import com.gsrmeen.commands.TinfoCommand;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -25,6 +26,7 @@ public class PokedexMod {
     @EventHandler
     public void serverLoad(FMLServerStartingEvent e) {
         e.registerServerCommand(new PinfoCommand());
+        e.registerServerCommand(new TinfoCommand());
     }
 
 }
