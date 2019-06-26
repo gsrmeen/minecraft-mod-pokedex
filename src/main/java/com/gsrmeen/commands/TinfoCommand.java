@@ -25,15 +25,16 @@ public class TinfoCommand extends ForgeCommand {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+        int firstItemPartIndex;
 
-        String[] argsConverted = new String[args.length];
-        for (int i = 0; i < args.length; i++) {
-            String arg = args[i];
-            argsConverted[i] = arg.substring(0, 1).toUpperCase() + arg.substring(1);
+        if (args[0].equals("drop")) {
+            firstItemPartIndex = 1;
+        } else {
+            firstItemPartIndex = 0;
         }
 
-        String itemName = String.join(" ", argsConverted);
 
+        String itemName = getItemName(args, firstItemPartIndex);
         IItemCrawler crawler = new PixelmonItemCrawler(itemName);
 
         if (!crawler.itemValid()) {
@@ -42,8 +43,28 @@ public class TinfoCommand extends ForgeCommand {
             return;
         }
 
-        TextComponentString description = crawler.getDescription();
-        sender.sendMessage(description);
+        if (args[0].equals("drop")) {
+            TextComponentString drops = crawler.getPossibleDrops();
+            if(drops == null) {
+                String msg = String.format("Couldn't find possible drop for item named %s. Try again.", itemName);
+                showErrorMessage(msg, sender);
+            } else {
+                sender.sendMessage(drops);
+            }
+        } else {
+            TextComponentString description = crawler.getDescription();
+            sender.sendMessage(description);
+        }
+    }
+
+    private String getItemName(String[] args, int firstIndex) {
+        String[] argsConverted = new String[args.length - firstIndex];
+        for (int i = firstIndex; i < args.length; i++) {
+            String arg = args[i];
+            argsConverted[i - firstIndex] = arg.substring(0, 1).toUpperCase() + arg.substring(1);
+        }
+
+        return String.join(" ", argsConverted);
     }
 
     private void showErrorMessage(String msg, ICommandSender sender) {
