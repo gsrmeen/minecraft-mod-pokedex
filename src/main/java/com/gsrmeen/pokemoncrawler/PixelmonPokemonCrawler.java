@@ -21,6 +21,14 @@ public class PixelmonPokemonCrawler implements IPokemonCrawler {
     private static final String TOTAL_TABLE_STYLE = "border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; -khtml-border-radius: 5px; -icab-border-radius: 5px; -o-border-radius: 5px;;";
     private static final String ERROR_DIV = "noarticletext mw-content-ltr";
 
+
+    private static final String MULTPL_FOUR = "#009900";
+    private static final String MULTPL_TWO = "#78C850";
+    private static final String MULTPL_HALF = "#FFA500";
+    private static final String MULTPL_QUARTER = "#FF0000";
+    private static final String MULTPL_ZERO = "#000000";
+
+
     public PixelmonPokemonCrawler(String pokemon) {
         this.pokemon = pokemon;
         try {
@@ -43,7 +51,7 @@ public class PixelmonPokemonCrawler implements IPokemonCrawler {
         List<Double> multipliers = new ArrayList<>();
 
         for (Element td : tds) {
-            multipliers.add(multiplierToDouble(td.text()));
+            multipliers.add(multiplierCellToDouble(td));
         }
 
         TextComponentString msg = new TextComponentString("Weak against: ");
@@ -163,22 +171,20 @@ public class PixelmonPokemonCrawler implements IPokemonCrawler {
         return rc;
     }
 
-    private double multiplierToDouble(String text) {
-        System.out.println("TEXT GOT: " + text);
-        if (text.contains("4")) {
+    private double multiplierCellToDouble(Element td) {
+        String styleTag = td.attr("style");
+        if (styleTag.contains(MULTPL_FOUR)) {
             return 4;
-        } else if (text.contains("2")) {
+        } else if (styleTag.contains(MULTPL_TWO)) {
             return 2;
-        } else if (text.contains("1")) {
-            return 1;
-        } else if (text.contains("0")) {
+        }  else if (styleTag.contains(MULTPL_ZERO)) {
             return 0;
-        } else if (text.contains("½")) {
+        } else if (styleTag.contains(MULTPL_HALF)) {
             return 0.5;
-        } else if (text.contains("¼")) {
+        } else if (styleTag.contains(MULTPL_QUARTER)) {
             return 0.25;
         } else {
-            return 0;
+            return 1;
         }
     }
 
