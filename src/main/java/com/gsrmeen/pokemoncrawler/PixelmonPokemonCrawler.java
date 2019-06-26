@@ -54,15 +54,7 @@ public class PixelmonPokemonCrawler implements IPokemonCrawler {
             multipliers.add(multiplierCellToDouble(td));
         }
 
-        TextComponentString msg = new TextComponentString("Weak against: ");
-        for (int i = 0; i < types.size(); i++) {
-            if (multipliers.get(i) > 1) {
-                String content = String.format("%s (%.0f) ", types.get(i), multipliers.get(i));
-                TextComponentString c = getFormattedTextComponent(content, types.get(i).getChatColor());
-                msg.appendSibling(c);
-            }
-        }
-
+        TextComponentString msg = new TextComponentString("Tough against: ");
         msg.appendSibling(new TextComponentString("\nTough against: "));
 
         for (int i = 0; i < types.size(); i++) {
@@ -72,6 +64,16 @@ public class PixelmonPokemonCrawler implements IPokemonCrawler {
                 msg.appendSibling(c);
             }
         }
+
+        msg.appendSibling(new TextComponentString("\nWeak against: "));
+        for (int i = 0; i < types.size(); i++) {
+            if (multipliers.get(i) > 1) {
+                String content = String.format("%s (%.0f) ", types.get(i), multipliers.get(i));
+                TextComponentString c = getFormattedTextComponent(content, types.get(i).getChatColor());
+                msg.appendSibling(c);
+            }
+        }
+
 
         return msg;
     }
@@ -177,7 +179,7 @@ public class PixelmonPokemonCrawler implements IPokemonCrawler {
             return 4;
         } else if (styleTag.contains(MULTPL_TWO)) {
             return 2;
-        }  else if (styleTag.contains(MULTPL_ZERO)) {
+        } else if (styleTag.contains(MULTPL_ZERO)) {
             return 0;
         } else if (styleTag.contains(MULTPL_HALF)) {
             return 0.5;
